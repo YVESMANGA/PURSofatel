@@ -22,14 +22,19 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
-    {
-        $request->authenticate();
+   public function store(LoginRequest $request): RedirectResponse|View
+{
+    $request->authenticate();
 
-        $request->session()->regenerate();
+    $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
-    }
+    // Option 1 : retourne la vue 'dashboard.blade.php'
+    return view('BO.importer');
+
+    // Option 2 : si tu veux passer des données :
+    // return view('dashboard', ['user' => auth()->user()]);
+}
+
 
     /**
      * Destroy an authenticated session.
