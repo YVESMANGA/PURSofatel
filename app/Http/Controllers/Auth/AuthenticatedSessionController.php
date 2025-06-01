@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,24 +17,55 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        
         return view('auth.login');
+    }
+
+    public function acceuilBo(): View
+    {
+        
+        return view('BO.importer');
+    }
+    public function acceuilChef_zone(): View
+    {
+        
+        return view('ChefZone.index');
+    }
+    public function acceuilTechnicien(): View
+    {
+        
+        return view('Technicien.index');
     }
 
     /**
      * Handle an incoming authentication request.
      */
-   public function store(LoginRequest $request): RedirectResponse|View
-{
-    $request->authenticate();
+    public function store(LoginRequest $request): RedirectResponse
+    {
+        $request->authenticate();
+        $request->session()->regenerate();
+    
+        $user = Auth::user();
 
-    $request->session()->regenerate();
-
-    // Option 1 : retourne la vue 'dashboard.blade.php'
-    return view('BO.importer');
-
-    // Option 2 : si tu veux passer des données :
-    // return view('dashboard', ['user' => auth()->user()]);
-}
+    
+        switch ($user->role) {
+            case 'bo':
+                return redirect()->route('acceuil.bo');
+    
+            case 'chef_zone':
+                return redirect()->route('acceuil.chef_zone');
+    
+            case 'technicien':
+                return redirect()->route('acceuil.technicien');
+    
+            default:
+            Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Utilisateur inconnu.',
+                ]);
+        }
+    }
+    
 
 
     /**

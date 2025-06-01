@@ -1,42 +1,48 @@
 <?php
-
 namespace App\Imports;
 
 use App\Models\Demande;
-use Maatwebsite\Excel\Concerns\ToModel;
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use PhpOffice\PhpSpreadsheet\Shared\Date;
 
-
-class DemandesImport implements ToModel, WithHeadingRow
+class DemandesImport implements ToCollection, WithHeadingRow
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function model(array $row)
-    {
+    private $fichierImporteId;
 
-         // Debug pour voir les entêtes réelles
-         dd($row); // Active-le pour voir les vraies clés si ça bug encore
-        return new Demande([
-            'nd' => $row['ND'],
-        'zone' => $row['ZONE'] ?? null,
-        'priorite_traitement' => $row['PRIORITE_TRAITEMENT'] ?? null,
-        'origine' => $row['ORIGINE'] ?? null,
-        'offre' => $row['OFFRE'] ?? null,
-        'type_techno' => $row['TYPE_TECHNO'] ?? null,
-        'produit' => $row['PRODUIT'] ?? null,
-        'rep_srp' => $row['REP_SRP'] ?? null,
-        'constitution' => $row['CONSTITUTION'] ?? null,
-        'specialite' => $row['SPECIALITE'] ?? null,
-        'resultat_essai' => $row['RESULTAT_ESSAI'] ?? null,
-        'commentaire_essai' => $row['COMMENTAIRE_ESSAI'] ?? null,
-        'agent_essai' => $row['AGENT_ESSAI'] ?? null,
-        'date_demande_intervention' => $row['DATE_DEMANDE_INTERVENTION'] ?? null,
-        'commentaire_interv' => $row['COMMENTAIRE_INTERV'] ?? null,
-        'id_ot' => $row['ID_OT'] ?? null,
-        'fichier_importe_id' => $this->fichierImporteId, // si tu l'utilises
-        ]);
+    public function __construct($fichierImporteId)
+    {
+        $this->fichierImporteId = $fichierImporteId;
+    }
+
+    public function collection(Collection $rows)
+    {
+        foreach ($rows as $row) {
+            // Convertir la date Excel en objet DateTime, ou null si vide
+            $dateDemandeIntervention = isset($row['date_demande_int']) && !empty($row['date_demande_int'])
+                ? Date::excelToDateTimeObject($row['date_demande_int'])
+                : null;
+
+            Demande::create([
+                'nd' => $row['nd'] ?? null,
+                'zone' => $row['zone'] ?? null,
+                'priorite_traitement' => $row['priorite_de_traitement'] ?? null,
+                'origine' => $row['origine'] ?? null,
+                'offre' => $row['offre'] ?? null,
+                'type_techno' => $row['type'] ?? null,
+                'produit' => $row['produit'] ?? null,
+                'rep_srp' => $row['rep_srp'] ?? null,
+                'constitution' => $row['constitution'] ?? null,
+                'specialite' => $row['specialite_choisie'] ?? null,
+                'resultat_essai' => $row['result_ess'] ?? null,
+                'commentaire_essai' => $row['commentaire_essai'] ?? null,
+                'agent_essai' => $row['agent_ess'] ?? null,
+                'date_demande_intervention' => $dateDemandeIntervention,
+                'commentaire_interv' => $row['commentaire_interv'] ?? null,
+                'id_ot' => $row['id_ot'] ?? null,
+                'fichier_importe_id' => $this->fichierImporteId,
+            ]);
+        }
     }
 }
