@@ -41,7 +41,7 @@
 
         @if (Auth::check() && Auth::user()->role === 'bo')
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('acceuil.bo.importer') }}" class="nav-link">
                     <i class="nav-icon fas fa-file-import text-orange"></i>
                     <p>Fichier Importer</p>
                 </a>

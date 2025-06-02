@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\FichierImporte;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -23,8 +24,8 @@ class AuthenticatedSessionController extends Controller
 
     public function acceuilBo(): View
     {
-        
-        return view('BO.importer');
+        $fichiers = FichierImporte::latest()->get();
+        return view('BO.importer', compact('fichiers'));
     }
     public function acceuilChef_zone(): View
     {

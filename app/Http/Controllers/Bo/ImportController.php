@@ -7,18 +7,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Imports\DemandesImport;
 use App\Models\FichierImporte;
+use App\Models\Demande;
 use App\Models\User;
 
 class ImportController extends Controller
 {
     //
-    public function showForm()
-    {
-        $fichier = FichierImporte::findOrFail($id);
-        $demandes = $fichier->demandes()->paginate(50);
-        return view('import.form');
-    }
-
     public function import(Request $request)
     {
         $request->validate([
@@ -37,6 +31,21 @@ class ImportController extends Controller
     
 
 
+    public function visualiser($id)
+    {
+        $fichier = FichierImporte::findOrFail($id);
+        $demandes = Demande::where('fichier_importe_id', $id)->get();
+
+        return view('bo.apercu', compact('fichier', 'demandes'));
+    }
+
+     public function dispatch($id)
+    {
+        $fichier = FichierImporte::findOrFail($id);
+        $demandes = Demande::where('fichier_importe_id', $id)->get();
+
+        return view('bo.dispatch', compact('fichier', 'demandes'));
+    }
 
 
 }
