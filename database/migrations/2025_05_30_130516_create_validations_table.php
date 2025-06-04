@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('validations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rapport_intervention_id')->constrained('rapports_intervention')->onDelete('cascade');
+            $table->foreignId('rapport_intervention_id')->constrained('rapport_interventions')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // pilote
             $table->enum('statut', ['valide', 'rejete']);
             $table->string('action')->nullable(); // exemple : corriger, archiver
