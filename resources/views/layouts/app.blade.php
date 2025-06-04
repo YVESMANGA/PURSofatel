@@ -41,7 +41,7 @@
 
         @if (Auth::check() && Auth::user()->role === 'bo')
             <li class="nav-item">
-                <a href="{{ route('acceuil.bo.importer') }}" class="nav-link">
+                <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-file-import text-orange"></i>
                     <p>Fichier Importer</p>
                 </a>
@@ -65,6 +65,35 @@
                 </a>
             </li>
         @endif
+
+
+        @if (Auth::check() && Auth::user()->role === 'chef_zone')
+
+    <li class="nav-item mt-4">
+    <a href="{{ route('chefZone.index') }}" class="nav-link">
+      <i class="nav-icon fas fa-list text-orange"></i>
+      <p>Créer Liste</p>
+    </a>
+  </li>
+    <li class="nav-item mt-4">
+    <a href="{{ route('chefZone.equipes') }}" class="nav-link">
+        <i class="nav-icon fas fa-users text-orange"></i>
+        <p>Mes équipes</p>
+    </a>
+</li>
+
+ <li class="nav-item mt-4">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-file-alt text-orange"></i>
+                    <p>suivi des interventions</p>
+                </a>
+            </li>
+
+
+  
+        @endif
+
+
         </ul>
     </nav>
 </div>

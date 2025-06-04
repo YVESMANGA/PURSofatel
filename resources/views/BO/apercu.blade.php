@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -43,3 +44,27 @@
         </div>
     </div>
 </x-app-layout>
+=======
+
+    <h2>Tableau du fichier : {{ $fichier->nom_fichier }}</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                @foreach($donnees[0] ?? [] as $key => $val)
+                    <th>{{ $key }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($donnees as $row)
+                <tr>
+                    @foreach($row as $val)
+                        <td>{{ $val }}</td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+>>>>>>> b6b4f3f1acbfcbbc50dbb2dd95d6d81f137130dc

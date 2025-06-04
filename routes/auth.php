@@ -59,13 +59,17 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> b6b4f3f1acbfcbbc50dbb2dd95d6d81f137130dc
     Route::get('Acceuil/bo', [AuthenticatedSessionController::class, 'acceuilBo'])
         ->name('acceuil.bo')
         ->middleware(['auth', 'role:bo']);
     
+<<<<<<< HEAD
     Route::get('Acceuil/bo/importer', [AuthenticatedSessionController::class, 'acceuilBo'])
         ->name('acceuil.bo.importer')
         ->middleware(['auth', 'role:bo']);
@@ -79,6 +83,8 @@ Route::middleware('auth')->group(function () {
     ->middleware(['auth', 'role:bo']);
     
     
+=======
+>>>>>>> b6b4f3f1acbfcbbc50dbb2dd95d6d81f137130dc
 
     Route::get('Acceuil/chef_zone', [AuthenticatedSessionController::class, 'acceuilChef_zone'])
         ->name('acceuil.chef_zone')

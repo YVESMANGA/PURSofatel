@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('dispatch_equipe_pilotes', function (Blueprint $table) {
             $table->id();
-             $table->foreignId('equipe_disponible_id')->constrained('equipes_disponibles')->onDelete('cascade');
+             $table->foreignId('equipe_disponible_id')->constrained('equipe_disponibles')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // pilote
             $table->timestamps();
         });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 
+
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
+        
         
         return view('auth.login');
     }
@@ -45,6 +47,29 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
+    
+        $user = Auth::user();
+
+    
+        switch ($user->role) {
+            case 'bo':
+                return redirect()->route('acceuil.bo');
+    
+            case 'chef_zone':
+                return redirect()->route('acceuil.chef_zone');
+    
+            case 'technicien':
+                return redirect()->route('acceuil.technicien');
+    
+            default:
+            Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Utilisateur inconnu.',
+                ]);
+        }
+    }
+    
+
     
         $user = Auth::user();
 

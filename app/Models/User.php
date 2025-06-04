@@ -46,4 +46,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    /**
+     * Get the chef zone associated with the user.
+     */
+    public function chefZone()
+{
+    return $this->hasOne(ChefZone::class);
+}
+
 }

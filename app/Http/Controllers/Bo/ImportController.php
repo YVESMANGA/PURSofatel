@@ -7,12 +7,25 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Imports\DemandesImport;
 use App\Models\FichierImporte;
+<<<<<<< HEAD
 use App\Models\Demande;
+=======
+>>>>>>> b6b4f3f1acbfcbbc50dbb2dd95d6d81f137130dc
 use App\Models\User;
 
 class ImportController extends Controller
 {
     //
+<<<<<<< HEAD
+=======
+    public function showForm()
+    {
+        $fichier = FichierImporte::findOrFail($id);
+        $demandes = $fichier->demandes()->paginate(50);
+        return view('import.form');
+    }
+
+>>>>>>> b6b4f3f1acbfcbbc50dbb2dd95d6d81f137130dc
     public function import(Request $request)
     {
         $request->validate([
@@ -31,6 +44,7 @@ class ImportController extends Controller
     
 
 
+<<<<<<< HEAD
     public function visualiser($id)
     {
         $fichier = FichierImporte::findOrFail($id);
@@ -46,6 +60,8 @@ class ImportController extends Controller
 
         return view('bo.dispatch', compact('fichier', 'demandes'));
     }
+=======
+>>>>>>> b6b4f3f1acbfcbbc50dbb2dd95d6d81f137130dc
 
 
 }

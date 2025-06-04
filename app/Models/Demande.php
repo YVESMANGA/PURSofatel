@@ -10,6 +10,7 @@ class Demande extends Model
     protected $fillable = [
         'nd',
         'zone',
+<<<<<<< HEAD
         'priorite_de_traitement',
         'origine',
         'offre',
@@ -73,10 +74,26 @@ class Demande extends Model
         'date_demande_int',
         'commentaire_interv',
         'agent_dem_int',
+=======
+        'priorite_traitement',
+        'origine',
+        'offre',
+        'type_techno',
+        'produit',
+        'rep_srp',
+        'constitution',
+        'specialite',
+        'resultat_essai',
+        'commentaire_essai',
+        'agent_essai',
+        'date_demande_intervention',
+        'commentaire_interv',
+>>>>>>> b6b4f3f1acbfcbbc50dbb2dd95d6d81f137130dc
         'id_ot',
         'fichier_importe_id',
     ];
 
+<<<<<<< HEAD
     protected $dates = [
         'date_sig',
         'date_msv_acces_reseau',
@@ -95,4 +112,6 @@ class Demande extends Model
         return $this->belongsTo(FichierImporte::class, 'fichier_importe_id');
     }
 
+=======
+>>>>>>> b6b4f3f1acbfcbbc50dbb2dd95d6d81f137130dc
 }
