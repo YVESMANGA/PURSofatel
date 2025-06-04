@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('nom_equipe');
             $table->string('technologie');
             $table->string('service');
-            $table->foreignId('chef_zone_id')->constrained('chefs_zones')->onDelete('cascade');
+            $table->foreignId('chef_zone_id')->constrained('chef_zones')->onDelete('cascade');
+        
             $table->timestamps();
         });
     }

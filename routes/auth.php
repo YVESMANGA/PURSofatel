@@ -9,7 +9,9 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Bo\ImportController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\RoleMiddleware;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -56,4 +58,16 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    Route::get('Acceuil/bo', [AuthenticatedSessionController::class, 'acceuilBo'])
+        ->name('acceuil.bo')
+        ->middleware(['auth', 'role:bo']);
+    
+
+    Route::get('Acceuil/chef_zone', [AuthenticatedSessionController::class, 'acceuilChef_zone'])
+        ->name('acceuil.chef_zone')
+        ->middleware(['auth', 'role:chef_zone']);
+    Route::get('Acceuil/technicien', [AuthenticatedSessionController::class, 'acceuilTechnicien'])
+        ->name('acceuil.technicien');
+
 });
