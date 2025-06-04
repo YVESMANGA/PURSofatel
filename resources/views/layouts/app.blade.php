@@ -7,82 +7,98 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/plugins/jquery/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
 
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
 
-<body class="font-sans antialiased bg-blue-50">
-<div class="flex h-screen" x-data="{ sidebarOpen: false }">
-
-    <!-- Sidebar -->
-    <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" 
-           class="fixed z-30 inset-y-0 left-0 w-64 bg-blue-100 text-blue-900 border-r border-blue-300 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:flex-shrink-0">
-
-        <div class="h-16 flex items-center justify-center text-2xl font-bold border-b border-blue-300">
-            <span>PUR</span>
-        </div>
-
-       
-        <nav class="mt-6">
-            <ul class="space-y-6 px-4">
-                <li>
-                    <a href="" class="flex items-center space-x-3 p-3 rounded hover:bg-blue-200 hover:text-blue-900 transition">
-                        <i class="fas fa-house text-blue-600 w-5"></i>
-                        <span>Importer Fichier</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="" class="flex items-center space-x-3 p-3 rounded hover:bg-blue-200 hover:text-blue-900 transition">
-                        <i class="fas fa-box-open text-blue-600 w-5"></i>
-                        <span>creer liste</span>
-                    </a>
-                </li>
-                
-            </ul>
-        </nav>
-       
-
-        <!-- Sidebar pour les EMPLOYÉS (guard: employe) -->
-
+    <!-- Navbar -->
     
+    <!-- /.navbar -->
 
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+        <span class="block mx-auto text-center text-2xl font-bold">
+  <span class="text-orange-500">SOF</span><span class="text-white">Atel</span>
+</span>
+
+            
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+    <nav class="mt-6">
+        <ul class="nav nav-pills nav-sidebar flex-column space-y-2" data-widget="treeview" role="menu">
+
+        @if (Auth::check() && Auth::user()->role === 'bo')
+            <li class="nav-item">
+                <a href="{{ route('acceuil.bo.importer') }}" class="nav-link">
+                    <i class="nav-icon fas fa-file-import text-orange"></i>
+                    <p>Fichier Importer</p>
+                </a>
+            </li>
+            <li class="nav-item mt-4">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-truck text-orange"></i>
+                    <p>Dispatching Demandes</p>
+                </a>
+            </li>
+            <li class="nav-item mt-4">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-users text-orange"></i>
+                    <p>Liste Equipe Dispo</p>
+                </a>
+            </li>
+            <li class="nav-item mt-4">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-list text-orange"></i>
+                    <p>Créer Liste</p>
+                </a>
+            </li>
+        @endif
+        </ul>
+    </nav>
+</div>
+
+        <!-- /.sidebar -->
     </aside>
 
-    <!-- Overlay mobile -->
-    <div x-show="sidebarOpen" @click="sidebarOpen = false"
-         class="fixed inset-0 z-20 bg-black bg-opacity-50 md:hidden" x-cloak></div>
+    @include('layouts.navigation')
 
-    <!-- Main Content -->
-    <div class="flex-1 flex flex-col overflow-hidden">
-
-        <!-- Top navbar (mobile) -->
-        <header class="flex items-center justify-between bg-blue-100 shadow px-4 py-3 md:hidden">
-            <button @click="sidebarOpen = true" class="text-blue-700 hover:text-blue-900 focus:outline-none">
-                <i class="fas fa-bars fa-lg"></i>
-            </button>
-            <h1 class="text-lg font-semibold text-blue-900">Netsys Sales</h1>
-        </header>
-
-        @include('layouts.navigation')
-
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
         @isset($header)
-            <header class="bg-blue-100 shadow hidden md:block">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">{{ $header }}</h1>
+                    </div>
                 </div>
-            </header>
+            </div>
+        </div>
         @endisset
 
-        <main class="flex-1 overflow-y-auto p-6 bg-blue-50">
-            {{ $slot }}
-        </main>
+        <div class="content">
+            <div class="container-fluid">
+                {{ $slot }}
+            </div>
+        </div>
     </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer text-sm">
+        <strong>&copy; {{ date('Y') }} PUR.</strong> Tous droits réservés.
+    </footer>
 </div>
 </body>
 </html>
